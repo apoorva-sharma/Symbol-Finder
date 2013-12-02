@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>Symbol Finder</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+    var upper_ = false;
+    $(document).ready(function() {
+      $("#searchbox").keyup(function(e) {
+        if (e.keyCode == 13) { // enter/return
+          $("#searchbox").blur()
+          $("#results input:first-child")[0].select();
+        } else if (e.keyCode > 64 && e.keyCode < 91) { //not a control key
+          $.getJSON("sym?" + $(this).val(), loadResults);
+        } else if (e.keyCode == 8) { //backspace
+          $.getJSON("sym?" + $(this).val(), loadResults);
+        }
+      })
+      $("#results input").focus(function(e) {
+        e.preventDefault();
+      })
+      $("#results input").click(function() {
+        console.log("ha");
+        $(this).focus();
+      });
+    });
+
+    $(document).keyup(function(e) {
+      if(e.keyCode == 27) {
+        $("#searchbox").select();
+      } else if (e.keyCode == 16) { // shift
+        upper_ = !(upper_);
+        $("searchbox").toggleClass('shift');
+        $.getJSON("sym?" + $("#searchbox").val(), loadResults);
+      }
+    });
+
+    function loadResults(data) {
+      $("#results").html(""); //clear the results
+      for (var i = 0; i < data.length; i++) {
+        var text = (upper_) ? data[i].upper : data[i].lower;
+        $("#results").append("<input type='text' value='" + text + "' disabled='disabled' onclick='this.select()' style='opacity:"+ data[i].score +"'>");
+      };
+    }
+    </script>
+    <style>
+    body {
+      background-color: #ccc;
+    }
+
+    #content {
+      width: 800px;
+      margin: 0 auto;
+      padding: 100px 0;
+    }
+
+    #results input[type="text"] {
+      border: 1px solid #555;
+      background: #333;
+      width: 90px;
+      height: 90px;
+      margin: 5px;
+      text-align: center;
+      font-size: 40pt;
+      line-height: 90px;
+      border-radius: 7px;
+      color: #ccc;
+      box-shadow: 0px 4px #111, 0px 4px 5px rgba(0,0,0,0.5);
+      text-shadow: 0px -1px 1px black;
+      font-family: Helvetica;
+    }
+
+    #results input[type="text"]:first-child {
+      box-shadow: 0px 4px rgb(0,65,136), 0px 4px 5px rgba(0,30,80,0.5);
+      background-color: rgb(1,97,165);
+      text-shadow: 0px -1px 1px rgb(0,45,116);
+      opacity: 1 !important;
+    }
+
+    #searchbox {
+      text-transform: lowercase;
+      width: 790px;
+      margin: 0 5px 15px;
+      height: 70px;
+      font-size: 36pt;
+      padding: 0 10px;
+      font-family: Helvetica;
+      border-radius: 7px;
+      border: 1px solid #666;
+      box-shadow: inset 0px 2px 3px rgba(0,0,0,0.5);
+      color: #222;
+    }
+    #searchbox:focus {
+      box-shadow: inset 0px 2px 3px rgba(0,0,0,0.5), 0 0 3px white;
+      outline: none;
+      border-color: black;
+    }
+    #searchbox.shift {
+      text-transform: capitalize;
+    }
+    h1 {
+      font-family: Helvetica;
+      margin: 15px 5px;
+      font-weight: 300;
+      font-size: 40pt;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <h1>Symbol Finder</h1>
+      <input type="text" id="searchbox">
+      <div id="results"></div>
+    </div>
+  </body>
+</html>
