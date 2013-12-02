@@ -2,7 +2,7 @@
  * Symbols, written by Apoorva Sharma, 12/1/2013 *
  **************************************************/
 var port = process.env.PORT || 5000;
-var app = require('http').createServer(handler).listen(8000)
+var app = require('http').createServer(handler).listen(port)
   , fs = require('fs')
   , url = require('url');
 
