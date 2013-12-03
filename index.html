@@ -41,7 +41,7 @@
       $("#results").html(""); //clear the results
       for (var i = 0; i < data.length; i++) {
         var text = (upper_) ? data[i].upper : data[i].lower;
-        $("#results").append("<input type='text' value='" + text + "' disabled='disabled' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ i+1 +"'>");
+        $("#results").append("<input type='text' value='" + text + "' disabled='disabled' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ (i+1) +"'>");
       };
     }
     </script>
