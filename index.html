@@ -28,7 +28,7 @@
     });
 
     $(document).keyup(function(e) {
-      if(e.keyCode == 27) {
+      if(e.keyCode == 27) { // escape
         $("#searchbox").select();
       } else if (e.keyCode == 16) { // shift
         upper_ = !(upper_);
@@ -106,6 +106,20 @@
       font-weight: 300;
       font-size: 40pt;
     }
+    #hints {
+      font-family: Helvetica;
+      font-size: 20pt;
+      color:#666;
+      text-align: center;
+    }
+    #hints em {
+      display: inline-block;
+      padding: 1px;
+      background-color: #666;
+      color: #ccc;
+      border: 1px solid #888;
+      box-shadow: 0 1px rgba(0,0,0,0.5);
+    }
     </style>
   </head>
   <body>
@@ -113,6 +127,10 @@
       <h1>Symbol Finder</h1>
       <input type="text" id="searchbox" placeholder="Search for a symbol...">
       <div id="results"></div>
+      <div id="hints">
+        Press <em>enter</em> to select the top result.<br>
+        Press <em>ESC</em> to search for something else.
+      </div>
     </div>
   </body>
 </html>
