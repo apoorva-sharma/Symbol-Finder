@@ -16,6 +16,12 @@
         } else if (e.keyCode == 8) { //backspace
           $.getJSON("sym?" + $(this).val(), loadResults);
         }
+        // down
+        else if (e.keyCode == 40) {
+          $("#searchbox").blur()
+          $("#results input:first-child")[0].focus();
+          currentitem = 0;
+        }
       });
       $("#results input").focus(function(e) {
         e.preventDefault();
@@ -66,6 +72,9 @@
         if (currentitem - 8 >= 0) {
           currentitem -= 8;
           $("#results #result" + currentitem).focus();
+        } else {
+          currentitem == -1;
+          $("#searchbox").select();
         }
       }
     });
@@ -179,7 +188,8 @@
       <div id="results"></div>
       <div id="hints">
         Press <em>enter</em> to select the top result.<br>
-        Press <em>esc</em> to search for something else.
+        Press <em>esc</em> to search for something else.<br>
+        Use the <em>arrow keys</em> to navigate results.
       </div>
     </div>
   </body>
