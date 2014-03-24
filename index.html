@@ -4,11 +4,13 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript">
     var upper_ = false;
+    var currentitem = 0;
     $(document).ready(function() {
       $("#searchbox").keyup(function(e) {
         if (e.keyCode == 13) { // enter/return
           $("#searchbox").blur()
           $("#results input:first-child")[0].select();
+          currentitem = 0;
         } else if (e.keyCode > 64 && e.keyCode < 91) { //not a control key
           $.getJSON("sym?" + $(this).val(), loadResults);
         } else if (e.keyCode == 8) { //backspace
@@ -26,10 +28,44 @@
     $(document).keyup(function(e) {
       if(e.keyCode == 27) { // escape
         $("#searchbox").select();
-      } else if (e.keyCode == 16) { // shift
+      } 
+      else if (e.keyCode == 16) { // shift
         upper_ = !(upper_);
         $("searchbox").toggleClass('shift');
         $.getJSON("sym?" + $("#searchbox").val(), loadResults);
+        $("#results #result" + currentitem).select();
+      } 
+      else if (e.keyCode == 13) { // enter/return
+        $("#results input:first-child")[0].select();
+      } 
+      // arrow keys
+      // left
+      else if (e.keyCode == 37) {
+        if (currentitem > 0) {
+          currentitem--;
+          $("#results #result" + currentitem).select();
+        }
+      }
+      // right
+      else if (e.keyCode == 39) {
+        if (currentitem + 1 < $("#results input").size()) {
+          currentitem++;
+          $("#results #result" + currentitem).select();
+        }
+      }
+      // down
+      else if (e.keyCode == 40) {
+        if (currentitem + 8 < $("#results input").size()) {
+          currentitem += 8;
+          $("#results #result" + currentitem).select();
+        }
+      }
+      // up
+      else if (e.keyCode == 38) {
+        if (currentitem - 8 >= 0) {
+          currentitem -= 8;
+          $("#results #result" + currentitem).select();
+        }
       }
     });
 
@@ -37,7 +73,7 @@
       $("#results").html(""); //clear the results
       for (var i = 0; i < data.length; i++) {
         var text = (upper_) ? data[i].upper : data[i].lower;
-        $("#results").append("<input type='text' value='" + text + "' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ (i+1) +"' readonly>");
+        $("#results").append("<input type='text' value='" + text + "' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ (i+1) +"' readonly id='result" + i + "'>");
       };
     }
     </script>

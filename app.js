@@ -98,8 +98,9 @@ function matches(sym, query) {
   } else if (sym.charAt(0) == query.charAt(0)) {
     return 1 + matches(sym.substr(1), query.substr(1));
   } else {
+    // penalize when letters need to be skipped
     return Math.max(matches(sym.substr(1), query),
-                    matches(sym, query.substr(1)));
+                    matches(sym, query.substr(1))) - 0.2;
   }
 }
 
