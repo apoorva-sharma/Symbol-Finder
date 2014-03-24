@@ -18,10 +18,6 @@
       $("#results input").focus(function(e) {
         e.preventDefault();
       });
-      $("#results input").click(function() {
-        console.log("ha");
-        $(this).select();
-      });
 
       // start with the text box focused
       $("#searchbox").focus();
@@ -41,7 +37,7 @@
       $("#results").html(""); //clear the results
       for (var i = 0; i < data.length; i++) {
         var text = (upper_) ? data[i].upper : data[i].lower;
-        $("#results").append("<input type='text' value='" + text + "' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ (i+1) +"'>");
+        $("#results").append("<input type='text' value='" + text + "' onclick='this.select()' style='opacity:"+ data[i].score +"' tabindex='"+ (i+1) +"' readonly>");
       };
     }
     </script>
@@ -71,12 +67,15 @@
       text-shadow: 0px -1px 1px black;
       font-family: Helvetica;
     }
-
     #results input[type="text"]:first-child {
       box-shadow: 0px 4px rgb(0,65,136), 0px 4px 5px rgba(0,30,80,0.5);
       background-color: rgb(1,97,165);
       text-shadow: 0px -1px 1px rgb(0,45,116);
       opacity: 1 !important;
+    }
+    #results input[type="text"]:focus {
+      opacity: 1 !important;
+      outline: none;
     }
 
     #searchbox {
