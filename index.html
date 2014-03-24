@@ -14,10 +14,10 @@
         } else if (e.keyCode == 8) { //backspace
           $.getJSON("sym?" + $(this).val(), loadResults);
         }
-      })
+      });
       $("#results input").focus(function(e) {
         e.preventDefault();
-      })
+      });
       $("#results input").click(function() {
         console.log("ha");
         $(this).select();
