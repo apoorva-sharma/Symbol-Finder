@@ -9,7 +9,7 @@
       $("#searchbox").keyup(function(e) {
         if (e.keyCode == 13) { // enter/return
           $("#searchbox").blur()
-          $("#results input:first-child")[0].select();
+          $("#results input:first-child")[0].focus();
           currentitem = 0;
         } else if (e.keyCode > 64 && e.keyCode < 91) { //not a control key
           $.getJSON("sym?" + $(this).val(), loadResults);
@@ -19,6 +19,7 @@
       });
       $("#results input").focus(function(e) {
         e.preventDefault();
+        this.select();
       });
 
       // start with the text box focused
@@ -33,38 +34,38 @@
         upper_ = !(upper_);
         $("searchbox").toggleClass('shift');
         $.getJSON("sym?" + $("#searchbox").val(), loadResults);
-        $("#results #result" + currentitem).select();
+        $("#results #result" + currentitem).focus();
       } 
       else if (e.keyCode == 13) { // enter/return
-        $("#results input:first-child")[0].select();
+        $("#results input:first-child")[0].focus();
       } 
       // arrow keys
       // left
       else if (e.keyCode == 37) {
         if (currentitem > 0) {
           currentitem--;
-          $("#results #result" + currentitem).select();
+          $("#results #result" + currentitem).focus();
         }
       }
       // right
       else if (e.keyCode == 39) {
         if (currentitem + 1 < $("#results input").size()) {
           currentitem++;
-          $("#results #result" + currentitem).select();
+          $("#results #result" + currentitem).focus();
         }
       }
       // down
       else if (e.keyCode == 40) {
         if (currentitem + 8 < $("#results input").size()) {
           currentitem += 8;
-          $("#results #result" + currentitem).select();
+          $("#results #result" + currentitem).focus();
         }
       }
       // up
       else if (e.keyCode == 38) {
         if (currentitem - 8 >= 0) {
           currentitem -= 8;
-          $("#results #result" + currentitem).select();
+          $("#results #result" + currentitem).focus();
         }
       }
     });
